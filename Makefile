@@ -1,11 +1,12 @@
 
 main: clean
-	rustc main.rs
-	RUST_BACKTRACE=full ./main
+	cargo build --release
+	cargo run --release
 
 last:
-	rustc main.rs
-	RUST_BACKTRACE=full ./main last
+	cargo build
+	cargo run last
 
 clean:
-	rm -f main
+	cargo clean
+

@@ -2,7 +2,9 @@ use std::env;
 use std::fs;
 use std::time::Instant;
 
-pub struct ProblemType {
+#[macro_use] extern crate maplit;
+
+pub struct Problem {
     pub name: String,
     pub f: fn() -> String,
     pub expect : String
@@ -13,7 +15,7 @@ pub trait ProblemTrait {
     fn verify(&self);
 }
 
-impl ProblemTrait for ProblemType {
+impl ProblemTrait for Problem {
     fn solve(&self) -> String {
         (self.f)()
     }
@@ -28,7 +30,9 @@ impl ProblemTrait for ProblemType {
 
 fn read_file_to_int_list(name : String) -> Vec<u64> {
     let file_content = fs::read_to_string(name).unwrap();
-    let lines = file_content.trim().split("\n").collect::<Vec<&str>>();
+    let lines = file_content
+        .trim() // read_to_string add a newline at the end
+        .split("\n").collect::<Vec<&str>>();
     let nums = lines.iter().map(|line| line.parse::<u64>().unwrap()).collect::<Vec<u64>>();
     nums
 }
@@ -38,7 +42,7 @@ fn p1_1() -> String {
     let mut last : u64 = 0;
     let mut counter = 0;
     for n in nums.iter() {
-        if (*n > last) {
+        if n > &last {
             counter = counter + 1;
         }
         last = *n;
@@ -62,49 +66,12 @@ fn p1_2() -> String {
     format!("{:?}", counter).to_string()
 }
 
-
-// fn demo() -> String {
-//     fs::read_to_string("demo.txt").unwrap().trim().to_string()
-// }
-// 
-// fn calculate_fuel(mass: i64) -> i64 {
-//     ((mass / 3) as i64) - 2
-// }
-// 
-// fn p1_1() -> String {
-//     fs::read_to_string("p1_1").unwrap()
-//         .trim().split("\n").collect::<Vec<&str>>()
-//         .iter().map(|line| line.parse::<i64>().unwrap())
-//         .map(calculate_fuel)
-//         .sum::<i64>()
-//         .to_string()
-// }
-// 
-// fn calculate_fuel2(mass: u64) -> u64 {
-//     let tmp = (mass / 3) as u64;
-//     if tmp > 2 {
-//         tmp - 2 + (calculate_fuel2(tmp - 2))
-//     } else {
-//         0
-//     }
-// }
-// 
-// fn p1_2() -> String {
-//     fs::read_to_string("p1_1").unwrap()
-//         .trim().split("\n").collect::<Vec<&str>>()
-//         .iter().map(|line| line.parse::<u64>().unwrap())
-//         .map(calculate_fuel2)
-//         .sum::<u64>()
-//         .to_string()
-// }
-
 fn main() {
     let mut problems = Vec::new();
-    problems.push(ProblemType {name: String::from("p1_1"), f:p1_1, expect: String::from("1722")});
-    problems.push(ProblemType {name: String::from("p1_2"), f:p1_2, expect: String::from("1748")});
+    problems.push(Problem {name: String::from("p1_1"), f:p1_1, expect: String::from("1722")});
+    problems.push(Problem {name: String::from("p1_2"), f:p1_2, expect: String::from("1748")});
 
     let args: Vec<String> = env::args().collect();
-    println!("{:?}", args);
     let num = args.len();
     if num == 2 && args[1].eq(&"last") {
         problems[problems.len()-1].verify();
