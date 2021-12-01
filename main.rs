@@ -1,8 +1,10 @@
 use std::env;
-use std::fs;
 use std::time::Instant;
 
 #[macro_use] extern crate maplit;
+
+mod aocutil;
+mod p1;
 
 pub struct Problem {
     pub name: String,
@@ -28,48 +30,10 @@ impl ProblemTrait for Problem {
     }
 }
 
-fn read_file_to_int_list(name : String) -> Vec<u64> {
-    let file_content = fs::read_to_string(name).unwrap();
-    let lines = file_content
-        .trim() // read_to_string add a newline at the end
-        .split("\n").collect::<Vec<&str>>();
-    let nums = lines.iter().map(|line| line.parse::<u64>().unwrap()).collect::<Vec<u64>>();
-    nums
-}
-
-fn p1_1() -> String {
-    let nums = read_file_to_int_list("p1_1".to_string());
-    let mut last : u64 = 0;
-    let mut counter = 0;
-    for n in nums.iter() {
-        if n > &last {
-            counter = counter + 1;
-        }
-        last = *n;
-    }
-    counter = counter - 1; // remove cmp with 0
-    format!("{:?}", counter).to_string()
-}
-
-fn p1_2() -> String {
-    let nums = read_file_to_int_list("p1_1".to_string());
-    let mut last_window : u64 = 0;
-    let mut counter = 0;
-    for n in 2..nums.len() {
-        let window = nums[n-2] + nums[n-1] + nums[n];
-        if window > last_window {
-            counter = counter + 1;
-        }
-        last_window = window;
-    }
-    counter = counter - 1;
-    format!("{:?}", counter).to_string()
-}
-
 fn main() {
     let mut problems = Vec::new();
-    problems.push(Problem {name: String::from("p1_1"), f:p1_1, expect: String::from("1722")});
-    problems.push(Problem {name: String::from("p1_2"), f:p1_2, expect: String::from("1748")});
+    problems.push(Problem {name: String::from("p1_1"), f:p1::p1_1, expect: String::from("1722")});
+    problems.push(Problem {name: String::from("p1_2"), f:p1::p1_2, expect: String::from("1748")});
 
     let args: Vec<String> = env::args().collect();
     let num = args.len();
