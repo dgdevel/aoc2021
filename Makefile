@@ -1,10 +1,8 @@
 
-main: clean
-	cargo build --release
+main:
 	cargo run --release
 
 last:
-	cargo build
 	cargo run last
 
 clean:
