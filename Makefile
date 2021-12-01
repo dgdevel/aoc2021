@@ -1,11 +1,11 @@
 
 main: clean
 	rustc main.rs
-	./main
+	RUST_BACKTRACE=full ./main
 
 last:
 	rustc main.rs
-	./main last
+	RUST_BACKTRACE=full ./main last
 
 clean:
 	rm -f main

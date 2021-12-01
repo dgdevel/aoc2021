@@ -22,52 +22,86 @@ impl ProblemTrait for ProblemType {
         let solution = self.solve();
         let elapsed = start.elapsed();
         let result = if solution.eq(&self.expect) { "OK" } else { "KO" };
-        println!("{}: {} got {} expected {} ({:?})", result, self.name, solution, self.expect, elapsed)
+        println!("{}: {} got {} expected {} ({:?})", result, self.name, solution, self.expect, elapsed);
     }
 }
 
-
-
-fn demo() -> String {
-    fs::read_to_string("demo.txt").unwrap().trim().to_string()
-}
-
-fn calculate_fuel(mass: i64) -> i64 {
-    ((mass / 3) as i64) - 2
+fn read_file_to_int_list(name : String) -> Vec<u64> {
+    let file_content = fs::read_to_string(name).unwrap();
+    let lines = file_content.trim().split("\n").collect::<Vec<&str>>();
+    let nums = lines.iter().map(|line| line.parse::<u64>().unwrap()).collect::<Vec<u64>>();
+    nums
 }
 
 fn p1_1() -> String {
-    fs::read_to_string("p1_1").unwrap()
-        .trim().split("\n").collect::<Vec<&str>>()
-        .iter().map(|line| line.parse::<i64>().unwrap())
-        .map(calculate_fuel)
-        .sum::<i64>()
-        .to_string()
-}
-
-fn calculate_fuel2(mass: u64) -> u64 {
-    let tmp = (mass / 3) as u64;
-    if tmp > 2 {
-        tmp - 2 + (calculate_fuel2(tmp - 2))
-    } else {
-        0
+    let nums = read_file_to_int_list("p1_1".to_string());
+    let mut last : u64 = 0;
+    let mut counter = 0;
+    for n in nums.iter() {
+        if (*n > last) {
+            counter = counter + 1;
+        }
+        last = *n;
     }
+    counter = counter - 1; // remove cmp with 0
+    format!("{:?}", counter).to_string()
 }
 
 fn p1_2() -> String {
-    fs::read_to_string("p1_1").unwrap()
-        .trim().split("\n").collect::<Vec<&str>>()
-        .iter().map(|line| line.parse::<u64>().unwrap())
-        .map(calculate_fuel2)
-        .sum::<u64>()
-        .to_string()
+    let nums = read_file_to_int_list("p1_1".to_string());
+    let mut last_window : u64 = 0;
+    let mut counter = 0;
+    for n in 2..nums.len() {
+        let window = nums[n-2] + nums[n-1] + nums[n];
+        if window > last_window {
+            counter = counter + 1;
+        }
+        last_window = window;
+    }
+    counter = counter - 1;
+    format!("{:?}", counter).to_string()
 }
+
+
+// fn demo() -> String {
+//     fs::read_to_string("demo.txt").unwrap().trim().to_string()
+// }
+// 
+// fn calculate_fuel(mass: i64) -> i64 {
+//     ((mass / 3) as i64) - 2
+// }
+// 
+// fn p1_1() -> String {
+//     fs::read_to_string("p1_1").unwrap()
+//         .trim().split("\n").collect::<Vec<&str>>()
+//         .iter().map(|line| line.parse::<i64>().unwrap())
+//         .map(calculate_fuel)
+//         .sum::<i64>()
+//         .to_string()
+// }
+// 
+// fn calculate_fuel2(mass: u64) -> u64 {
+//     let tmp = (mass / 3) as u64;
+//     if tmp > 2 {
+//         tmp - 2 + (calculate_fuel2(tmp - 2))
+//     } else {
+//         0
+//     }
+// }
+// 
+// fn p1_2() -> String {
+//     fs::read_to_string("p1_1").unwrap()
+//         .trim().split("\n").collect::<Vec<&str>>()
+//         .iter().map(|line| line.parse::<u64>().unwrap())
+//         .map(calculate_fuel2)
+//         .sum::<u64>()
+//         .to_string()
+// }
 
 fn main() {
     let mut problems = Vec::new();
-    problems.push(ProblemType {name: String::from("demo"), f:demo, expect: String::from("abc" )});
-    problems.push(ProblemType {name: String::from("p1_1"), f:p1_1, expect: String::from("3369286")});
-    problems.push(ProblemType {name: String::from("p1_2"), f:p1_2, expect: String::from("5051054")});
+    problems.push(ProblemType {name: String::from("p1_1"), f:p1_1, expect: String::from("1722")});
+    problems.push(ProblemType {name: String::from("p1_2"), f:p1_2, expect: String::from("1748")});
 
     let args: Vec<String> = env::args().collect();
     println!("{:?}", args);
