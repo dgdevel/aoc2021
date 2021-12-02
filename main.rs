@@ -5,6 +5,7 @@ use std::time::Instant;
 
 mod aocutil;
 mod p1;
+mod p2;
 
 pub struct Problem {
     pub name: String,
@@ -34,6 +35,8 @@ fn main() {
     let mut problems = Vec::new();
     problems.push(Problem {name: String::from("p1_1"), f:p1::p1_1, expect: String::from("1722")});
     problems.push(Problem {name: String::from("p1_2"), f:p1::p1_2, expect: String::from("1748")});
+    problems.push(Problem {name: String::from("p2_1"), f:p2::p2_1, expect: String::from("2102357")});
+    problems.push(Problem {name: String::from("p2_2"), f:p2::p2_2, expect: String::from("2101031224")});
 
     let args: Vec<String> = env::args().collect();
     let num = args.len();
