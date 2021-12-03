@@ -8,7 +8,7 @@ main:
 	cargo run --release
 
 run:
-	cargo run --release $(RUN_ARGS)
+	cargo run $(RUN_ARGS)
 
 last:
 	cargo run last

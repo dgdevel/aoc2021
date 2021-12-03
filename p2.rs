@@ -12,6 +12,7 @@ fn parse_instruction(line: &String) -> Instruction {
     Instruction { verb:parts[0].to_string(), value:parts[1].parse::<u32>().unwrap() }
 }
 
+#[derive(Default)]
 struct Position {
     x_horizontal : u32,
     y_depth : u32,
@@ -21,7 +22,7 @@ struct Position {
 pub fn p2_1() -> String {
     let lines = aocutil::read_file_to_string_list("p2_1".to_string());
     let instructions = lines.iter().map(parse_instruction).collect::<Vec<Instruction>>();
-    let final_state = instructions.iter().fold(Position {x_horizontal:0, y_depth:0, z_aim:0}, |state, instruction| {
+    let final_state = instructions.iter().fold(Position {..Default::default()}, |state, instruction| {
         if instruction.verb.eq("forward") {
             Position { x_horizontal:state.x_horizontal + instruction.value, y_depth:state.y_depth, z_aim:0 }
         } else if instruction.verb.eq("down") {

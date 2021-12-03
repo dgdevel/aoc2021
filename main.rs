@@ -27,7 +27,7 @@ impl ProblemTrait for Problem {
         let start = Instant::now();
         let solution = self.solve();
         let elapsed = start.elapsed();
-        let result = if solution.eq(&self.expect) { "OK" } else { "KO" };
+        let result = if solution.eq(&self.expect) { "\x1b[32mOK\x1b[39m" } else { "\x1b[31mKO\x1b[39m" };
         println!("{}: {} got {} expected {} ({:?})", result, self.name, solution, self.expect, elapsed);
         elapsed
     }
