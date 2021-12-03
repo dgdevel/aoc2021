@@ -37,7 +37,7 @@ fn main() {
     problems.push(Problem {name: String::from("p2_1"), f:p2::p2_1, expect: String::from("2102357")});
     problems.push(Problem {name: String::from("p2_2"), f:p2::p2_2, expect: String::from("2101031224")});
     problems.push(Problem {name: String::from("p3_1"), f:p3::p3_1, expect: String::from("3885894")});
-    problems.push(Problem {name: String::from("p3_2"), f:p3::p3_2, expect: String::from("")});
+    problems.push(Problem {name: String::from("p3_2"), f:p3::p3_2, expect: String::from("4375225")});
 
     let args: Vec<String> = env::args().collect();
     let num = args.len();
