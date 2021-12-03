@@ -1,11 +1,10 @@
 use std::env;
 use std::time::Instant;
 
-#[macro_use] extern crate maplit;
-
 mod aocutil;
 mod p1;
 mod p2;
+mod p3;
 
 pub struct Problem {
     pub name: String,
@@ -37,6 +36,8 @@ fn main() {
     problems.push(Problem {name: String::from("p1_2"), f:p1::p1_2, expect: String::from("1748")});
     problems.push(Problem {name: String::from("p2_1"), f:p2::p2_1, expect: String::from("2102357")});
     problems.push(Problem {name: String::from("p2_2"), f:p2::p2_2, expect: String::from("2101031224")});
+    problems.push(Problem {name: String::from("p3_1"), f:p3::p3_1, expect: String::from("3885894")});
+    problems.push(Problem {name: String::from("p3_2"), f:p3::p3_2, expect: String::from("")});
 
     let args: Vec<String> = env::args().collect();
     let num = args.len();
