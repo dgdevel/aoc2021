@@ -79,7 +79,7 @@ fn parse_board(lines_board : Vec<String>) -> Board {
      }
 }
 
-pub fn p4_1() -> String {
+pub fn p4() -> String {
     let lines = aocutil::read_file_to_string_list("p4_1".to_string());
     let nums = lines[0].split(",").collect::<Vec<&str>>().iter().map(|s| s.parse::<u8>().unwrap()).collect::<Vec<u8>>();
     let num_of_boards = (lines.len() - 1) / 6;
@@ -89,40 +89,11 @@ pub fn p4_1() -> String {
         let board = parse_board(lines_board);
         boards.push(board);
     }
-
-    for num in nums {
-        // println!("num {}", num);
-        for b in 0..boards.len() {
-            let board = &mut boards[b];
-            let res = board.search(num);
-            if res.is_some() {
-                let pos = res.unwrap();
-                board.mark(pos[0], pos[1]);
-                if board.bingo() {
-                    // println!("bingo {}", b);
-                    // println!("{:?}", board);
-                    return format!("{:?}", board.sum_of_unmarked() * num as u32);
-                }
-            }
-        }
-    }
-    unreachable!();
-}
-
-pub fn p4_2() -> String {
-    let lines = aocutil::read_file_to_string_list("p4_1".to_string());
-    let nums = lines[0].split(",").collect::<Vec<&str>>().iter().map(|s| s.parse::<u8>().unwrap()).collect::<Vec<u8>>();
-    let num_of_boards = (lines.len() - 1) / 6;
-    let mut boards : Vec<Board> = Vec::new();
-    for n in 0..num_of_boards {
-        let lines_board = (&lines[2+n*6..7+n*6]).to_vec();
-        let board = parse_board(lines_board);
-        boards.push(board);
-    }
+    let mut first_board : i8 = -1;
+    let mut first_num : i8 = -1;
     let mut last_board : i8 = -1;
     let mut last_num : i8 = -1;
     for num in nums {
-        // println!("num {}", num);
         for b in 0..boards.len() {
             let board = &mut boards[b];
             if ! board.bingo() {
@@ -131,19 +102,20 @@ pub fn p4_2() -> String {
                     let pos = res.unwrap();
                     board.mark(pos[0], pos[1]);
                     if board.bingo() {
-                        // println!("bingo {}", b);
                         last_board = b as i8;
                         last_num = num as i8;
+                        if first_board == -1 {
+                            first_board = b as i8;
+                            first_num = num as i8;
+                        }
                     }
                 }
             }
         }
     }
-    // println!("{:?}", last_board);
-    // println!("{:?}", boards[last_board as usize]);
-    // println!("{:?}", boards[last_board as usize].sum_of_unmarked());
-    // println!("{:?}", last_num);
-    let score = boards[last_board as usize].sum_of_unmarked() * last_num as u32;
-    format!("{:?}", score).to_string()
+
+    let first_score = boards[first_board as usize].sum_of_unmarked() * first_num as u32;
+    let last_score = boards[last_board as usize].sum_of_unmarked() * last_num as u32;
+    format!("{}-{}", first_score, last_score)
 }
 
