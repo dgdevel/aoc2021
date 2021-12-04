@@ -8,7 +8,7 @@ main:
 	cargo run --release
 
 run:
-	cargo run $(RUN_ARGS)
+	RUST_BACKTRACE=full cargo run $(RUN_ARGS)
 
 last:
 	cargo run last

@@ -1,6 +1,10 @@
 
 use std::fs;
 
+pub fn inspect<T>(_: &T) {
+    println!("{}", std::any::type_name::<T>());
+}
+
 pub fn read_file_to_int_list(name : String) -> Vec<u64> {
     let file_content = fs::read_to_string(name).unwrap();
     let lines = file_content
