@@ -45,8 +45,7 @@ fn main() {
     // problems.push(Problem {name: String::from("p4_1"), f:p4::p4_1, expect: String::from("10680")});
     // problems.push(Problem {name: String::from("p4_2"), f:p4::p4_2, expect: String::from("31892")});
     problems.push(Problem {name: String::from("p4"), f:p4::p4, expect: String::from("10680-31892")});
-    problems.push(Problem {name: String::from("p5_1"), f:p5::p5_1, expect: String::from("5690")});
-    problems.push(Problem {name: String::from("p5_2"), f:p5::p5_2, expect: String::from("")});
+    problems.push(Problem {name: String::from("p5"), f:p5::p5, expect: String::from("5690-17741")});
 
 
     let args: Vec<String> = env::args().collect();
