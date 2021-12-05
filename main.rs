@@ -7,6 +7,7 @@ mod p1;
 mod p2;
 mod p3;
 mod p4;
+mod p5;
 
 pub struct Problem {
     pub name: String,
@@ -44,6 +45,9 @@ fn main() {
     // problems.push(Problem {name: String::from("p4_1"), f:p4::p4_1, expect: String::from("10680")});
     // problems.push(Problem {name: String::from("p4_2"), f:p4::p4_2, expect: String::from("31892")});
     problems.push(Problem {name: String::from("p4"), f:p4::p4, expect: String::from("10680-31892")});
+    problems.push(Problem {name: String::from("p5_1"), f:p5::p5_1, expect: String::from("5690")});
+    problems.push(Problem {name: String::from("p5_2"), f:p5::p5_2, expect: String::from("")});
+
 
     let args: Vec<String> = env::args().collect();
     let num = args.len();
