@@ -11,7 +11,7 @@ pub fn p6() -> String {
     for fish in lanternfishs {
         counters[fish as usize] += 1;
     }
-    for day in 1..81 {
+    for _day in 1..81 {
         let gen = counters[0];
         for n in 0..7 {
             counters[n] = counters[n+1];
@@ -25,7 +25,7 @@ pub fn p6() -> String {
     for c in counters {
         sum += c;
     }
-    for day in 81..257 {
+    for _day in 81..257 {
         let gen = counters[0];
         for n in 0..7 {
             counters[n] = counters[n+1];
